@@ -6,7 +6,8 @@ import { eq, desc } from "drizzle-orm";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import archiver from "archiver";
-import { storagePut } from "./storage";
+// Utiliser le stockage local au lieu de S3 pour le développement
+import { storagePut } from "./storage-local";
 
 /**
  * Fonction pour extraire toutes les ressources d'une page HTML

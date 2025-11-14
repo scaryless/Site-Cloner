@@ -52,14 +52,27 @@ pnpm db:push
 pnpm dev
 ```
 
-## 🔧 Configuration
+## ⚠️ **Configuration**
 
 Les variables d'environnement suivantes sont nécessaires :
 
 - `DATABASE_URL` : URL de connexion à la base de données MySQL
-- `JWT_SECRET` : Secret pour la génération des tokens JWT
-- `OAUTH_SERVER_URL` : URL du serveur OAuth
-- Variables S3 pour le stockage des fichiers
+- `JWT_SECRET` : Secret pour la génération des tokens JWT (optionnel en mode développement)
+- `OAUTH_SERVER_URL` : URL du serveur OAuth (optionnel, OAuth désactivé par défaut)
+
+**Stockage des fichiers** : Les archives ZIP sont stockées localement dans le dossier `storage/` (pas besoin de configurer S3)
+
+### Variables d'environnement optionnelles
+
+Créez un fichier `.env` à la racine si vous souhaitez personnaliser :
+
+```env
+# URL de base pour accéder aux fichiers (par défaut http://localhost:3000)
+BASE_URL=http://localhost:3000
+
+# Port du serveur (par défaut 3000)
+PORT=3000
+```
 
 ## 📖 Utilisation
 

@@ -22,4 +22,12 @@
 - [x] Créer un système d'authentification mock
 - [x] Modifier le frontend pour utiliser l'auth mock
 - [x] Mettre à jour la documentation
+- [x] Pousser les modifications sur GitHub
+
+## Remplacement S3 par stockage local
+
+- [x] Créer un module de stockage local
+- [x] Modifier le router de clonage pour utiliser le stockage local
+- [x] Servir les fichiers statiques via Express
+- [x] Mettre à jour la documentation
 - [ ] Pousser les modifications sur GitHub

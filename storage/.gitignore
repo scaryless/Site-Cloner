@@ -1,0 +1,4 @@
+# Ignorer tous les fichiers dans le dossier storage
+*
+# Mais garder ce fichier .gitignore
+!.gitignore
