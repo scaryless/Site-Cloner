@@ -87,27 +87,27 @@ PORT=3000
 
 ### Cloner des sites protégés par authentification
 
-Pour cloner des sites nécessitant une connexion :
+Pour cloner des sites nécessitant une connexion, utilisez le système de **profils de cookies** :
 
-1. **Utilisez le bookmarklet automatique** :
-   - Cliquez sur "Ajouter des cookies" dans l'interface
-   - Copiez le code du bookmarklet
-   - Créez un favori dans votre navigateur et collez le code comme URL
-   - Naviguez vers le site cible et connectez-vous
-   - Cliquez sur le bookmarklet pour extraire automatiquement les cookies
-   - Copiez le JSON affiché et collez-le dans l'interface
+1. **Créer un profil de cookies** :
+   - Cliquez sur "Gérer les profils de cookies" dans l'interface
+   - Entrez l'URL du site (ex: https://facebook.com)
+   - Cliquez sur "Ouvrir le navigateur et capturer les cookies"
+   - Un navigateur s'ouvrira automatiquement : **connectez-vous normalement au site**
+   - Attendez 30 secondes : les cookies seront capturés automatiquement
+   - Le profil apparaîtra dans votre liste avec le nom et logo du site
 
-2. **Ou saisissez manuellement les cookies** au format JSON :
-   ```json
-   [
-     {
-       "name": "session_id",
-       "value": "votre_valeur",
-       "domain": "example.com",
-       "path": "/"
-     }
-   ]
-   ```
+2. **Utiliser un profil pour cloner** :
+   - Cliquez sur "Gérer les profils de cookies"
+   - Sélectionnez le profil correspondant au site à cloner
+   - Entrez l'URL du site et cliquez sur "Cloner le site"
+   - Les cookies seront automatiquement utilisés pour accéder au contenu protégé
+
+**Avantages** :
+- ✅ Aucune manipulation technique
+- ✅ Interface 100% visuelle
+- ✅ Réutilisable pour plusieurs clonages
+- ✅ Gestion facile de plusieurs comptes/sites
 
 ### Pour réactiver OAuth en production
 

@@ -61,3 +61,20 @@ export const clonedResources = mysqlTable("clonedResources", {
 
 export type ClonedResource = typeof clonedResources.$inferSelect;
 export type InsertClonedResource = typeof clonedResources.$inferInsert;
+
+/**
+ * Table pour stocker les profils de cookies par domaine
+ */
+export const cookieProfiles = mysqlTable("cookieProfiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  domain: varchar("domain", { length: 255 }).notNull(), // Domaine du site (ex: facebook.com)
+  siteName: varchar("siteName", { length: 255 }), // Nom convivial (ex: "Facebook")
+  cookies: text("cookies").notNull(), // Cookies au format JSON
+  favicon: text("favicon"), // URL du favicon pour l'affichage
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CookieProfile = typeof cookieProfiles.$inferSelect;
+export type InsertCookieProfile = typeof cookieProfiles.$inferInsert;

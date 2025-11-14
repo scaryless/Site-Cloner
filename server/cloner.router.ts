@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
-import { clonedSites, clonedResources } from "../drizzle/schema";
+import { clonedSites, clonedResources, cookieProfiles } from "../drizzle/schema";
 import { eq, desc } from "drizzle-orm";
 import axios from "axios";
 import * as cheerio from "cheerio";
@@ -176,7 +176,8 @@ export const clonerRouter = router({
     .input(
       z.object({
         url: z.string().url(),
-        cookies: z.string().optional(), // Cookies au format JSON
+        cookies: z.string().optional(), // Cookies au format JSON (legacy)
+        profileId: z.number().optional(), // ID du profil de cookies à utiliser
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -198,8 +199,23 @@ export const clonerRouter = router({
       const siteId = site.insertId;
 
       try {
+        // Récupérer les cookies depuis le profil si profileId est fourni
+        let cookiesJson = input.cookies;
+        
+        if (input.profileId) {
+          const [profile] = await db
+            .select()
+            .from(cookieProfiles)
+            .where(eq(cookieProfiles.id, input.profileId))
+            .limit(1);
+          
+          if (profile) {
+            cookiesJson = profile.cookies;
+          }
+        }
+        
         // Parser les cookies si fournis
-        const cookieHeader = parseCookies(input.cookies);
+        const cookieHeader = parseCookies(cookiesJson);
         
         // Télécharger le HTML de la page
         const headers: any = {

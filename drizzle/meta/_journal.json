@@ -22,6 +22,13 @@
       "when": 1763138049181,
       "tag": "0002_short_captain_flint",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1763139485517,
+      "tag": "0003_open_felicia_hardy",
+      "breakpoints": true
     }
   ]
 }

@@ -40,4 +40,15 @@
 - [x] Créer un bookmarklet pour extraire automatiquement les cookies du navigateur
 - [x] Ajouter une option "Utiliser les cookies" dans le formulaire de clonage
 - [x] Documenter l'utilisation des cookies
+- [x] Pousser les modifications sur GitHub
+
+## Simplification de la gestion des cookies (capture automatique)
+
+- [x] Créer une table pour stocker les profils de cookies par domaine
+- [x] Installer Puppeteer pour contrôler le navigateur
+- [x] Créer une API pour ouvrir un navigateur et capturer les cookies
+- [x] Créer l'interface pour gérer les profils de cookies (liste visuelle)
+- [x] Permettre de sélectionner un profil lors du clonage
+- [x] Supprimer l'ancienne interface JSON (bookmarklet)
+- [x] Mettre à jour la documentation
 - [ ] Pousser les modifications sur GitHub

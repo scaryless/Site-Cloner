@@ -10,12 +10,12 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CookieManager } from "@/components/CookieManager";
+import { CookieProfileManager } from "@/components/CookieProfileManager";
 
 export default function Home() {
   const { user, loading, error, isAuthenticated, logout } = useAuth();
   const [url, setUrl] = useState("");
-  const [cookies, setCookies] = useState("");
+  const [selectedProfileId, setSelectedProfileId] = useState<number | undefined>();
   const [isCloning, setIsCloning] = useState(false);
 
   const { data: sites, refetch } = trpc.cloner.getMySites.useQuery(undefined, {
@@ -59,7 +59,7 @@ export default function Home() {
     }
 
     setIsCloning(true);
-    cloneSiteMutation.mutate({ url, cookies: cookies || undefined });
+    cloneSiteMutation.mutate({ url, profileId: selectedProfileId });
   };
 
   const handleDeleteSite = (siteId: number) => {
@@ -187,10 +187,13 @@ export default function Home() {
               </div>
               
               <div className="flex items-center gap-2">
-                <CookieManager onCookiesChange={setCookies} initialCookies={cookies} />
-                {cookies && (
+                <CookieProfileManager 
+                  onProfileSelect={setSelectedProfileId} 
+                  selectedProfileId={selectedProfileId}
+                />
+                {selectedProfileId && (
                   <span className="text-sm text-green-600">
-                    ✓ Cookies configurés
+                    ✓ Profil sélectionné
                   </span>
                 )}
               </div>
