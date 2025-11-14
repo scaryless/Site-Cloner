@@ -13,5 +13,13 @@
 - [x] Téléchargement du site cloné en archive ZIP
 - [x] Prévisualisation du site cloné
 - [x] Gestion de l'historique des clonages par utilisateur
-- [ ] Création du dépôt GitHub "Site-Cloner"
-- [ ] Push du code sur GitHub
+- [x] Création du dépôt GitHub "Site-Cloner"
+- [x] Push du code sur GitHub
+
+## Modifications pour développement local
+
+- [x] Désactiver OAuth dans le backend
+- [x] Créer un système d'authentification mock
+- [x] Modifier le frontend pour utiliser l'auth mock
+- [x] Mettre à jour la documentation
+- [ ] Pousser les modifications sur GitHub

@@ -63,11 +63,19 @@ Les variables d'environnement suivantes sont nécessaires :
 
 ## 📖 Utilisation
 
-1. **Se connecter** : Authentifiez-vous via OAuth
-2. **Entrer l'URL** : Saisissez l'URL du site à cloner
+### Mode développement local (par défaut)
+
+1. **Lancer l'app** : Vous êtes automatiquement connecté avec un utilisateur de test
+2. **Entrer l'URL** : Saisissez l'URL du site à cloner (ex: https://example.com)
 3. **Cloner** : Cliquez sur "Cloner le site" et attendez la fin du processus
 4. **Télécharger** : Téléchargez l'archive ZIP contenant le site complet
 5. **Gérer** : Consultez l'historique et supprimez les sites si nécessaire
+
+### Pour réactiver OAuth en production
+
+1. Dans `server/_core/context.ts` : Décommentez le code OAuth et supprimez l'utilisateur mock
+2. Dans `client/src/_core/hooks/useAuth.ts` : Décommentez le useEffect de redirection
+3. Configurez les variables d'environnement OAuth
 
 ## 🏗️ Architecture
 
@@ -88,7 +96,8 @@ site-cloner/
 
 ## 🔐 Sécurité
 
-- Authentification OAuth sécurisée
+- **Mode développement** : Authentification mock (utilisateur de test)
+- **Mode production** : Authentification OAuth sécurisée (désactivée par défaut)
 - Validation des URLs
 - Protection contre les injections
 - Gestion des erreurs robuste

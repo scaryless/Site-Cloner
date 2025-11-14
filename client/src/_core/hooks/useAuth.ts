@@ -38,10 +38,13 @@ export function useAuth(options?: UseAuthOptions) {
     } finally {
       utils.auth.me.setData(undefined, null);
       await utils.auth.me.invalidate();
+      // En mode développement local, recharger la page après déconnexion
+      window.location.reload();
     }
   }, [logoutMutation, utils]);
 
   const state = useMemo(() => {
+    // Sauvegarder l'info utilisateur dans localStorage
     localStorage.setItem(
       "manus-runtime-user-info",
       JSON.stringify(meQuery.data)
@@ -60,6 +63,9 @@ export function useAuth(options?: UseAuthOptions) {
     logoutMutation.isPending,
   ]);
 
+  // Désactivé pour le mode développement local
+  // En production avec OAuth, décommentez ce useEffect
+  /*
   useEffect(() => {
     if (!redirectOnUnauthenticated) return;
     if (meQuery.isLoading || logoutMutation.isPending) return;
@@ -75,6 +81,7 @@ export function useAuth(options?: UseAuthOptions) {
     meQuery.isLoading,
     state.user,
   ]);
+  */
 
   return {
     ...state,
