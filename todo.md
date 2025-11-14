@@ -30,4 +30,14 @@
 - [x] Modifier le router de clonage pour utiliser le stockage local
 - [x] Servir les fichiers statiques via Express
 - [x] Mettre à jour la documentation
+- [x] Pousser les modifications sur GitHub
+
+## Gestion des cookies pour sites protégés
+
+- [x] Ajouter une table pour stocker les cookies dans la base de données
+- [x] Créer l'interface pour saisir/modifier les cookies
+- [x] Modifier le backend pour envoyer les cookies avec les requêtes
+- [x] Créer un bookmarklet pour extraire automatiquement les cookies du navigateur
+- [x] Ajouter une option "Utiliser les cookies" dans le formulaire de clonage
+- [x] Documenter l'utilisation des cookies
 - [ ] Pousser les modifications sur GitHub

@@ -34,6 +34,7 @@ export const clonedSites = mysqlTable("clonedSites", {
   originalUrl: text("originalUrl").notNull(),
   title: text("title"),
   htmlContent: text("htmlContent"),
+  cookies: text("cookies"), // Cookies au format JSON pour l'authentification
   status: mysqlEnum("status", ["pending", "processing", "completed", "failed"]).default("pending").notNull(),
   errorMessage: text("errorMessage"),
   zipFileUrl: text("zipFileUrl"),

@@ -80,9 +80,34 @@ PORT=3000
 
 1. **Lancer l'app** : Vous êtes automatiquement connecté avec un utilisateur de test
 2. **Entrer l'URL** : Saisissez l'URL du site à cloner (ex: https://example.com)
-3. **Cloner** : Cliquez sur "Cloner le site" et attendez la fin du processus
-4. **Télécharger** : Téléchargez l'archive ZIP contenant le site complet
-5. **Gérer** : Consultez l'historique et supprimez les sites si nécessaire
+3. **Ajouter des cookies (optionnel)** : Pour les sites protégés par authentification, cliquez sur "Ajouter des cookies"
+4. **Cloner** : Cliquez sur "Cloner le site" et attendez la fin du processus
+5. **Télécharger** : Téléchargez l'archive ZIP contenant le site complet
+6. **Gérer** : Consultez l'historique et supprimez les sites si nécessaire
+
+### Cloner des sites protégés par authentification
+
+Pour cloner des sites nécessitant une connexion :
+
+1. **Utilisez le bookmarklet automatique** :
+   - Cliquez sur "Ajouter des cookies" dans l'interface
+   - Copiez le code du bookmarklet
+   - Créez un favori dans votre navigateur et collez le code comme URL
+   - Naviguez vers le site cible et connectez-vous
+   - Cliquez sur le bookmarklet pour extraire automatiquement les cookies
+   - Copiez le JSON affiché et collez-le dans l'interface
+
+2. **Ou saisissez manuellement les cookies** au format JSON :
+   ```json
+   [
+     {
+       "name": "session_id",
+       "value": "votre_valeur",
+       "domain": "example.com",
+       "path": "/"
+     }
+   ]
+   ```
 
 ### Pour réactiver OAuth en production
 

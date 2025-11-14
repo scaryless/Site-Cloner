@@ -88,16 +88,40 @@ async function extractResources(html: string, baseUrl: string) {
 }
 
 /**
+ * Fonction pour parser les cookies JSON et les convertir en chaîne Cookie
+ */
+function parseCookies(cookiesJson?: string): string {
+  if (!cookiesJson) return "";
+  
+  try {
+    const cookies = JSON.parse(cookiesJson);
+    if (Array.isArray(cookies)) {
+      return cookies.map(c => `${c.name}=${c.value}`).join("; ");
+    }
+    return "";
+  } catch (error) {
+    console.error("Erreur lors du parsing des cookies:", error);
+    return "";
+  }
+}
+
+/**
  * Fonction pour télécharger une ressource
  */
-async function downloadResource(url: string): Promise<Buffer | null> {
+async function downloadResource(url: string, cookieHeader?: string): Promise<Buffer | null> {
   try {
+    const headers: any = {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    };
+    
+    if (cookieHeader) {
+      headers["Cookie"] = cookieHeader;
+    }
+    
     const response = await axios.get(url, {
       responseType: "arraybuffer",
       timeout: 30000,
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-      },
+      headers,
     });
     return Buffer.from(response.data);
   } catch (error) {
@@ -152,6 +176,7 @@ export const clonerRouter = router({
     .input(
       z.object({
         url: z.string().url(),
+        cookies: z.string().optional(), // Cookies au format JSON
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -166,17 +191,27 @@ export const clonerRouter = router({
       const [site] = await db.insert(clonedSites).values({
         userId,
         originalUrl: input.url,
+        cookies: input.cookies || null,
         status: "processing",
       });
 
       const siteId = site.insertId;
 
       try {
+        // Parser les cookies si fournis
+        const cookieHeader = parseCookies(input.cookies);
+        
         // Télécharger le HTML de la page
+        const headers: any = {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        };
+        
+        if (cookieHeader) {
+          headers["Cookie"] = cookieHeader;
+        }
+        
         const response = await axios.get(input.url, {
-          headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-          },
+          headers,
           timeout: 30000,
         });
 
@@ -190,7 +225,7 @@ export const clonerRouter = router({
         // Télécharger toutes les ressources
         const downloadedResources = [];
         for (const resource of resourceUrls) {
-          const content = await downloadResource(resource.url);
+          const content = await downloadResource(resource.url, cookieHeader);
           if (content) {
             const urlObj = new URL(resource.url);
             const localPath = `assets${urlObj.pathname}`;

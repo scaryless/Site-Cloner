@@ -10,10 +10,12 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { CookieManager } from "@/components/CookieManager";
 
 export default function Home() {
   const { user, loading, error, isAuthenticated, logout } = useAuth();
   const [url, setUrl] = useState("");
+  const [cookies, setCookies] = useState("");
   const [isCloning, setIsCloning] = useState(false);
 
   const { data: sites, refetch } = trpc.cloner.getMySites.useQuery(undefined, {
@@ -57,7 +59,7 @@ export default function Home() {
     }
 
     setIsCloning(true);
-    cloneSiteMutation.mutate({ url });
+    cloneSiteMutation.mutate({ url, cookies: cookies || undefined });
   };
 
   const handleDeleteSite = (siteId: number) => {
@@ -158,29 +160,40 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex gap-4">
-              <Input
-                type="url"
-                placeholder="https://example.com"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleCloneSite()}
-                disabled={isCloning}
-                className="flex-1"
-              />
-              <Button onClick={handleCloneSite} disabled={isCloning} size="lg">
-                {isCloning ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Clonage en cours...
-                  </>
-                ) : (
-                  <>
-                    <Globe className="w-4 h-4 mr-2" />
-                    Cloner le site
-                  </>
+            <div className="space-y-4">
+              <div className="flex gap-4">
+                <Input
+                  type="url"
+                  placeholder="https://example.com"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleCloneSite()}
+                  disabled={isCloning}
+                  className="flex-1"
+                />
+                <Button onClick={handleCloneSite} disabled={isCloning} size="lg">
+                  {isCloning ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Clonage en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Globe className="w-4 h-4 mr-2" />
+                      Cloner le site
+                    </>
+                  )}
+                </Button>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <CookieManager onCookiesChange={setCookies} initialCookies={cookies} />
+                {cookies && (
+                  <span className="text-sm text-green-600">
+                    ✓ Cookies configurés
+                  </span>
                 )}
-              </Button>
+              </div>
             </div>
           </CardContent>
         </Card>

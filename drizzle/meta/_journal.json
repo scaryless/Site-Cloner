@@ -15,6 +15,13 @@
       "when": 1763129655825,
       "tag": "0001_sleepy_kat_farrell",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1763138049181,
+      "tag": "0002_short_captain_flint",
+      "breakpoints": true
     }
   ]
 }
