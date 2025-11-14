@@ -22,7 +22,10 @@ export function CookieProfileManager({ onProfileSelect, selectedProfileId }: Coo
 
   const createSessionMutation = trpc.cookieProfiles.createBrowserSession.useMutation({
     onSuccess: (data) => {
-      toast.success(`Profil créé pour ${data.siteName}`);
+      toast.success(`✅ Cookies capturés avec succès pour ${data.siteName} !`, {
+        description: "Le navigateur a été fermé automatiquement. Vous pouvez maintenant utiliser ce profil pour cloner le site.",
+        duration: 5000,
+      });
       setNewSiteUrl("");
       setIsCapturing(false);
       refetch();
@@ -57,7 +60,19 @@ export function CookieProfileManager({ onProfileSelect, selectedProfileId }: Coo
     }
 
     setIsCapturing(true);
-    toast.info("Un navigateur va s'ouvrir. Connectez-vous au site, puis attendez 30 secondes.");
+    
+    // Notification de démarrage
+    toast.info("🌐 Ouverture du navigateur...", {
+      duration: 3000,
+    });
+    
+    // Notification d'instruction
+    setTimeout(() => {
+      toast.info("🔑 Connectez-vous au site. La capture se fera automatiquement après connexion.", {
+        duration: 10000,
+      });
+    }, 2000);
+    
     createSessionMutation.mutate({ url: newSiteUrl });
   };
 
@@ -116,8 +131,8 @@ export function CookieProfileManager({ onProfileSelect, selectedProfileId }: Coo
                 )}
               </Button>
               <p className="text-xs text-gray-600">
-                Un navigateur s'ouvrira automatiquement. Connectez-vous au site, puis attendez 30 secondes. 
-                Les cookies seront capturés automatiquement.
+                🔍 Un navigateur s'ouvrira automatiquement. Connectez-vous normalement au site. 
+                Dès que la connexion est détectée, les cookies seront capturés et le navigateur se fermera automatiquement.
               </p>
             </div>
           </div>

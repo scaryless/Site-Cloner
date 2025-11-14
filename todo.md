@@ -51,4 +51,12 @@
 - [x] Permettre de sélectionner un profil lors du clonage
 - [x] Supprimer l'ancienne interface JSON (bookmarklet)
 - [x] Mettre à jour la documentation
+- [x] Pousser les modifications sur GitHub
+
+## Amélioration de la capture de cookies
+
+- [x] Détecter automatiquement quand l'utilisateur s'est connecté
+- [x] Envoyer une notification de fin de capture
+- [x] Fermer automatiquement le navigateur après capture
+- [x] Mettre à jour l'interface avec feedback en temps réel
 - [ ] Pousser les modifications sur GitHub

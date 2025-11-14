@@ -36,12 +36,29 @@ export const cookieProfilesRouter = router({
         // Naviguer vers l'URL
         await page.goto(input.url, { waitUntil: 'networkidle2' });
 
-        // Attendre que l'utilisateur se connecte (30 secondes max)
-        // Dans une vraie implémentation, on utiliserait un WebSocket pour notifier
-        await new Promise(resolve => setTimeout(resolve, 30000));
+        // Récupérer les cookies initiaux
+        const initialCookies = await page.cookies();
+        const initialCookieCount = initialCookies.length;
 
-        // Récupérer tous les cookies
-        const cookies = await page.cookies();
+        // Attendre que de nouveaux cookies soient créés (indiquant une connexion)
+        // ou timeout après 60 secondes
+        const startTime = Date.now();
+        const maxWaitTime = 60000; // 60 secondes max
+        let cookies = initialCookies;
+        
+        while (Date.now() - startTime < maxWaitTime) {
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Vérifier toutes les 2 secondes
+          cookies = await page.cookies();
+          
+          // Si de nouveaux cookies sont apparus, c'est probablement une connexion réussie
+          if (cookies.length > initialCookieCount + 2) {
+            console.log(`[Cookie Capture] Nouveaux cookies détectés (${cookies.length} vs ${initialCookieCount})`);
+            // Attendre encore 3 secondes pour s'assurer que tous les cookies sont créés
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            cookies = await page.cookies();
+            break;
+          }
+        }
         
         // Extraire le domaine et le titre de la page
         const url = new URL(input.url);
